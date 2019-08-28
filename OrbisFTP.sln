@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29009.5
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrbisFTP", "OrbisFTP\OrbisFTP.csproj", "{8CFA048F-6D8E-4FC9-A182-6DC7C90EB037}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrbisTest", "OrbisTest\OrbisTest.csproj", "{30ACE771-8CF5-48FD-8E1C-E1594037C893}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8CFA048F-6D8E-4FC9-A182-6DC7C90EB037} = {8CFA048F-6D8E-4FC9-A182-6DC7C90EB037}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8CFA048F-6D8E-4FC9-A182-6DC7C90EB037}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CFA048F-6D8E-4FC9-A182-6DC7C90EB037}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CFA048F-6D8E-4FC9-A182-6DC7C90EB037}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CFA048F-6D8E-4FC9-A182-6DC7C90EB037}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30ACE771-8CF5-48FD-8E1C-E1594037C893}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30ACE771-8CF5-48FD-8E1C-E1594037C893}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30ACE771-8CF5-48FD-8E1C-E1594037C893}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30ACE771-8CF5-48FD-8E1C-E1594037C893}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {266A2CB6-7278-46B7-9456-07BC30439A2B}
+	EndGlobalSection
+EndGlobal
