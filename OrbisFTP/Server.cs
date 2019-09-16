@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -37,6 +38,20 @@ namespace OrbisFTP
 
         #endregion
 
+        #region EVENTS
+        public event EventHandler<ClientJoinedArgs> ClientJoined;
+
+        protected virtual void OnClientJoin(ClientJoinedArgs e)
+        {
+            EventHandler<ClientJoinedArgs> handler = ClientJoined;
+
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+        #endregion
+
         public Server(int port = 21, string configFilePath = "ftp.conf")
         {
             TcpListener = new TcpListener(IPAddress.Parse("127.0.0.1"), port);
@@ -71,8 +86,17 @@ namespace OrbisFTP
                 Log("Started FTP Server, listening for incoming connections.", "Log");
 
                 while (true)
-                {   
-                    Clients.Add(new Client(this, TcpListener.AcceptTcpClient()));
+                {
+                    var newClient = new Client(this, TcpListener.AcceptTcpClient());
+
+                    Clients.Add(newClient);
+
+                    ClientJoinedArgs args = new ClientJoinedArgs()
+                    {
+                        NewClient = newClient
+                    };
+
+                    OnClientJoin(args);
                 }
             });
 
@@ -84,7 +108,12 @@ namespace OrbisFTP
 
         private void Log(string message, string header)
         {
-            Console.WriteLine(String.Format("[{0}] {1}", header, message));
+            Debug.WriteLine(String.Format("[{0}] {1}", header, message));
         }
+    }
+
+    public class ClientJoinedArgs : EventArgs
+    {
+        public Client NewClient { get; set; }
     }
 }

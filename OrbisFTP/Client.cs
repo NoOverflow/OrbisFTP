@@ -1,20 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace OrbisFTP
 {
-    
+
     /// <summary>
-    /// A class representing a FTP Client.
+    /// A class representing a FTP Client connecting to this server.
     /// </summary>
     public class Client
     {
@@ -44,17 +42,32 @@ namespace OrbisFTP
         /// <summary>
         /// Actual username of the client. Warning : May be different than the username being used for an ongoing transfer (refer to section 4.1.1)
         /// </summary>
-        private string Username;
+        public string Username;
 
-        private DirectoryInfo WorkingDirectory;
+        /// <summary>
+        /// DirectoryInfo about the actual working directory.
+        /// </summary>
+        public DirectoryInfo WorkingDirectory;
 
+        /// <summary>
+        /// The FTP Transfer  type (Ascii, Image...) 
+        /// </summary>
         private FtpTransferType TransferType;
 
+        /// <summary>
+        /// Data struct containing IP and Port 
+        /// </summary>
         private (IPAddress, int) NextFileTransferEndPoint;
 
+        /// <summary>
+        /// The data connection type.
+        /// </summary>
         private DataConnectionType ConnectionType;
 
-        private bool IsLoggedIn {get; set;}
+        /// <summary>
+        /// Is the user currently logged in.
+        /// </summary>
+        public bool IsLoggedIn {get; set;}
         #endregion
 
         public Client(Server Server, TcpClient TcpClient)
@@ -62,7 +75,7 @@ namespace OrbisFTP
             this.TcpClient = TcpClient;
             this.Server = Server;
             this.WorkingDirectory = Server.DirInfo;
-
+           
             this.FtpStreamReader = new StreamReader(this.TcpClient.GetStream(), Encoding.ASCII);
             this.FtpStreamWriter = new StreamWriter(this.TcpClient.GetStream(), Encoding.ASCII);
 
@@ -89,8 +102,6 @@ namespace OrbisFTP
 
                     if (String.IsNullOrEmpty(receivedCommand))
                         Disconnect();
-
-                    string response = "";
 
                     Log(String.Format("Got command from {0} : {1}", TcpClient.Client.RemoteEndPoint.ToString(), receivedCommand), "Log");
 
@@ -133,8 +144,6 @@ namespace OrbisFTP
             }
         }
  
-        
-
         public void Disconnect()
         {
 
@@ -150,7 +159,7 @@ namespace OrbisFTP
 
         public void Log(string message, string header)
         {
-            Console.WriteLine(String.Format("[{0}] {1}", header, message));
+            Debug.WriteLine(String.Format("[{0}] {1}", header, message));
         }
 
         #region FTP_COMMANDS
